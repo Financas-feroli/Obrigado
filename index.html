@@ -3,84 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagamento Confirmado • Central de Ativação do PROSPER Gestão Financeira</title>
+  <title>Pagamento Confirmado • Central de Ativação do PROSPER</title>
   <meta name="description" content="Sua licença vitalícia do PROSPER Gestão Financeira foi liberada. Acesse sua chave de ativação permanente e faça o download do instalador oficial para Windows.">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 
-  <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- Tailwind CSS CDN com plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
             brand: {
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-              800: '#065f46',
-              900: '#064e3b',
-              950: '#022c22',
-            },
-            navy: {
-              750: '#121c32',
-              800: '#0e1627',
-              850: '#0a101d',
-              900: '#070b14',
-              950: '#030712',
+              dark: '#050a10',
+              card: '#08121d',
+              border: '#1e293b',
+              emerald: '#10b981',
+              accent: '#00d084',
+              badge: '#043427',
+              pill: '#064e3b'
             }
           },
           boxShadow: {
-            'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.35)',
-            'glow-cyan': '0 0 30px -5px rgba(14, 165, 233, 0.3)',
+            'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.28)',
+            'window-hd': '0 20px 50px -12px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(15, 23, 42, 0.08)',
+            'card-hd': '0 4px 20px -2px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05)',
           }
         }
       }
     }
   </script>
 
+  <!-- Custom HD Styles -->
   <style>
     body {
-      background-color: #030712;
+      background-color: #050a10;
       color: #f1f5f9;
     }
-    .bg-grid-pattern {
-      background-size: 36px 36px;
+    .bg-dot-pattern {
+      background-image: radial-gradient(#1e293b 0.8px, transparent 0.8px);
+      background-size: 18px 18px;
+    }
+    .aurora-blur-top {
+      background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.08) 45%, transparent 70%);
+    }
+    .aurora-blur-bottom {
+      background: radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+    }
+    .custom-gradient-bg {
+      background-color: #050a10;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        radial-gradient(circle at 15% 15%, rgba(6, 78, 59, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(4, 52, 39, 0.14) 0%, transparent 50%);
     }
-    .glow-radial {
-      background: radial-gradient(circle at 50% 12%, rgba(16, 185, 129, 0.16) 0%, rgba(14, 165, 233, 0.06) 40%, rgba(3, 7, 18, 0) 75%);
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.85); }
     }
-    .card-glass {
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .pulse-indicator {
+      animation: pulse-dot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-    .card-glass:hover {
-      border-color: rgba(16, 185, 129, 0.35);
+    /* SVG Safe Constraints */
+    svg {
+      flex-shrink: 0;
     }
     @media print {
       body {
@@ -98,41 +98,55 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-[#030712] bg-grid-pattern glow-radial flex flex-col justify-between antialiased selection:bg-emerald-500 selection:text-slate-950 font-sans">
+<body class="min-h-screen bg-[#050a10] bg-dot-pattern custom-gradient-bg flex flex-col justify-between antialiased selection:bg-emerald-500 selection:text-slate-950 font-sans text-[15px] leading-relaxed relative">
+
+  <!-- Background Aurora Glows -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[450px] aurora-blur-top"></div>
+    <div class="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[350px] aurora-blur-bottom"></div>
+  </div>
 
   <!-- ================================================================= -->
-  <!-- BARRA DE CONFIRMAÇÃO OFICIAL -->
+  <!-- TOP ANNOUNCEMENT BAR (MATCHES SALES PAGE) -->
   <!-- ================================================================= -->
-  <aside aria-label="Aviso de Compra Concluída" class="no-print bg-gradient-to-r from-navy-950 via-[#062920] to-navy-950 text-emerald-300 text-xs font-semibold py-2.5 px-4 text-center border-b border-emerald-500/25 flex items-center justify-center gap-2 relative z-50">
-    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+  <aside class="no-print w-full bg-[#03080e] text-emerald-300 py-2 px-4 text-xs sm:text-[13px] font-semibold tracking-wide relative z-50 border-b border-emerald-950/60 text-center flex items-center justify-center gap-2">
+    <span class="relative flex h-2 w-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 pulse-indicator"></span>
+    </span>
     <span>⚡ <strong>PAGAMENTO APROVADO COM SUCESSO:</strong> Sua licença vitalícia permanente foi registrada e liberada no sistema.</span>
   </aside>
 
   <!-- ================================================================= -->
-  <!-- HEADER / NAVEGAÇÃO -->
+  <!-- MAIN NAVBAR (MATCHES SALES PAGE) -->
   <!-- ================================================================= -->
-  <header class="py-5 border-b border-slate-800/80 bg-navy-950/80 backdrop-blur-xl sticky top-0 z-40">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+  <header class="w-full border-b border-slate-800/80 bg-[#08121d]/85 backdrop-blur-md sticky top-0 z-40 transition-all duration-200 relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-4">
       
       <!-- Brand Logo -->
-      <div class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/25">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-slate-950 flex items-center justify-center text-white font-extrabold text-lg shadow-sm ring-1 ring-emerald-500/30">
           P
         </div>
-        <div class="flex flex-col">
-          <span class="font-black text-lg tracking-tight text-white leading-none">PROSPER</span>
-          <span class="text-[9px] font-bold text-emerald-400 tracking-widest uppercase mt-1">Central de Ativação</span>
+        <div class="flex flex-col leading-none">
+          <span class="font-extrabold text-white tracking-tight text-[17px]">PROSPER</span>
+          <span class="text-[9.5px] uppercase font-bold tracking-widest text-emerald-400 mt-0.5">Central de Ativação</span>
         </div>
       </div>
 
-      <!-- Status Badges & Botão Imprimir -->
+      <!-- Actions -->
       <div class="flex items-center gap-3">
-        <div class="hidden sm:flex items-center gap-2 text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/30">
-          <i data-lucide="shield-check" class="w-4 h-4"></i>
+        <div class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30">
+          <svg width="14" height="14" class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path clip-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" fill-rule="evenodd"></path>
+          </svg>
           <span>Licença Vitalícia Ativa</span>
         </div>
-        <button onclick="window.print()" class="no-print p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5" title="Imprimir / Salvar comprovante em PDF">
-          <i data-lucide="printer" class="w-4 h-4"></i>
+
+        <button onclick="window.print()" class="no-print p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer" title="Salvar comprovante em PDF">
+          <svg width="14" height="14" class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
           <span class="hidden sm:inline">Salvar PDF</span>
         </button>
       </div>
@@ -141,94 +155,113 @@
   </header>
 
   <!-- ================================================================= -->
-  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- MAIN CONTENT CONTAINER -->
   <!-- ================================================================= -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-8 w-full">
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-7 w-full relative z-10">
 
-    <!-- HERO DO SUCESSO -->
-    <div class="text-center space-y-4">
-      <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-emerald-500/15 border-2 border-emerald-500/40 text-emerald-400 shadow-glow-emerald mx-auto">
-        <i data-lucide="party-popper" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+    <!-- HERO HEADER -->
+    <div class="text-center space-y-3.5">
+      <div class="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-glow-emerald mx-auto">
+        <svg width="28" height="28" class="w-7 h-7 sm:w-8 sm:h-8 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
       </div>
 
-      <div class="space-y-2 max-w-2xl mx-auto">
-        <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 inline-block">
-          Compra Aprovada
-        </span>
-        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight" id="greetingHeader">
+      <div class="space-y-2 max-w-xl mx-auto">
+        <div>
+          <span class="text-[11px] font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30 inline-block">
+            COMPRA CONFIRMADA • ACESSO IMEDIATO
+          </span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight" id="greetingHeader">
           Parabéns! Sua Licença foi Liberada.
         </h1>
-        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Seu acesso permanente ao <strong class="text-white">PROSPER Gestão Financeira</strong> está pronto para uso. Siga os passos abaixo para copiar sua chave e baixar o instalador oficial para Windows.
+        <p class="text-slate-300 text-sm sm:text-[15px] leading-relaxed">
+          Seu acesso permanente ao <strong class="text-white">PROSPER Gestão Financeira</strong> está pronto para uso. Copie sua chave de ativação e baixe o instalador oficial para Windows abaixo.
         </p>
       </div>
     </div>
 
-    <!-- ============================================================= -->
+    <!-- ================================================================= -->
     <!-- ALERTA INTELIGENTE PARA QUEM COMPROU PELO CELULAR -->
-    <!-- ============================================================= -->
-    <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-amber-900/20 to-navy-950 border border-amber-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
-      <div class="flex items-start gap-3.5">
-        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
-          <i data-lucide="smartphone" class="w-5 h-5"></i>
+    <!-- ================================================================= -->
+    <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-amber-900/15 to-[#08121d] border border-amber-500/35 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/30">
+          <svg width="18" height="18" class="w-[18px] h-[18px] text-amber-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
         </div>
-        <div class="space-y-1">
-          <h2 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
-            <span>Comprou pelo celular ou está em outro dispositivo?</span>
-            <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">Software Windows</span>
+        <div class="space-y-0.5">
+          <h2 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2 flex-wrap">
+            <span>Comprou pelo celular ou está em outro aparelho?</span>
+            <span class="text-[9.5px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">Software Windows</span>
           </h2>
           <p class="text-xs text-slate-300 leading-relaxed">
-            O PROSPER é um sistema executivo que roda diretamente no seu computador ou notebook Windows. Você pode salvar sua chave agora e enviar o link de download direto para o seu WhatsApp para abrir no PC quando quiser.
+            O PROSPER roda diretamente no seu computador ou notebook com Windows. Envie os dados e o link de download direto para o seu WhatsApp para abrir no PC com 1 clique.
           </p>
         </div>
       </div>
-      <a href="#" id="shareWhatsappBtn" target="_blank" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shrink-0 shadow-md shadow-emerald-600/30 whitespace-nowrap">
-        <i data-lucide="share-2" class="w-4 h-4"></i>
-        <span>Enviar Link para Meu WhatsApp</span>
+
+      <a href="#" id="shareWhatsappBtn" target="_blank" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shrink-0 shadow-md shadow-emerald-600/25 whitespace-nowrap">
+        <svg width="16" height="16" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span>Enviar Dados para Meu WhatsApp</span>
       </a>
     </div>
 
-    <!-- ============================================================= -->
+    <!-- ================================================================= -->
     <!-- CARD 1: SUA CHAVE SERIAL DE ATIVAÇÃO VITALÍCIA (MÁXIMA PRIORIDADE) -->
-    <!-- ============================================================= -->
-    <section aria-labelledby="licenseSectionTitle" class="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#0f172a] via-[#0b1329] to-navy-950 border-2 border-emerald-500/50 shadow-2xl space-y-6 print-card relative overflow-hidden">
+    <!-- ================================================================= -->
+    <section aria-labelledby="licenseSectionTitle" class="p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-[#0d151e] via-[#08121d] to-[#050a10] border-2 border-emerald-500/50 shadow-2xl space-y-5 print-card relative overflow-hidden">
       
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3.5">
         <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <i data-lucide="key" class="w-4 h-4"></i>
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <svg width="16" height="16" class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
           </div>
           <div>
             <h2 id="licenseSectionTitle" class="font-bold text-sm sm:text-base text-white">Sua Chave Serial de Ativação Vitalícia:</h2>
-            <p class="text-[11px] text-slate-400">Ativação permanente para Windows • Armazenamento Local</p>
+            <p class="text-[11px] text-slate-400">Ativação permanente para Windows • Armazenamento 100% Local</p>
           </div>
         </div>
-        <span class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 self-start sm:self-auto">
+
+        <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 self-start sm:self-auto">
           Uso Permanente • Sem Mensalidade
         </span>
       </div>
 
-      <!-- KEY BOX WITH VISUAL EMPHASIS -->
+      <!-- KEY BOX -->
       <div class="space-y-3">
         <div class="flex flex-col sm:flex-row items-center gap-3">
-          <div class="w-full py-4 sm:py-5 px-5 rounded-2xl bg-slate-950/90 border-2 border-slate-700/80 font-mono font-black text-lg sm:text-2xl text-emerald-400 text-center sm:text-left tracking-wider shadow-inner select-all relative group" id="licenseKey">
+          <div class="w-full py-3.5 sm:py-4 px-4 rounded-xl bg-slate-950/90 border-2 border-slate-700/80 font-mono font-black text-base sm:text-xl text-emerald-400 text-center sm:text-left tracking-wider shadow-inner select-all relative group" id="licenseKey">
             PROSPER-P6UD-4HWB-NZQH-4XKX
           </div>
 
           <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
-            <button onclick="copyKey()" id="copyBtn" class="flex-1 sm:flex-none px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-slate-950 font-black text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30">
-              <i data-lucide="copy" class="w-4 h-4" id="copyIcon"></i>
+            <button onclick="copyKey()" id="copyBtn" class="flex-1 sm:flex-none px-5 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-slate-950 font-black text-xs sm:text-sm tracking-wide transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 cursor-pointer">
+              <svg width="16" height="16" class="w-4 h-4 text-slate-950 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" id="copyIcon">
+                <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
               <span id="copyText">Copiar Chave</span>
             </button>
-            <button onclick="downloadLicenseTxt()" class="p-4 sm:p-5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition-all flex items-center justify-center" title="Baixar arquivo TXT com sua chave para guardar">
-              <i data-lucide="file-text" class="w-5 h-5"></i>
+
+            <button onclick="downloadLicenseTxt()" class="p-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition-all flex items-center justify-center cursor-pointer" title="Baixar arquivo TXT de segurança com sua chave">
+              <svg width="18" height="18" class="w-[18px] h-[18px] text-slate-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
             </button>
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs text-slate-400">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-0.5 text-xs text-slate-400">
           <span class="flex items-center gap-1.5">
-            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <svg width="14" height="14" class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+            </svg>
             <span>Chave criptografada com assinatura matemática offline válida para sempre.</span>
           </span>
           <span class="text-[11px] text-slate-500 font-mono" id="customerEmailDisplay"></span>
@@ -236,9 +269,11 @@
       </div>
 
       <!-- INSTRUÇÃO DE SEGURANÇA -->
-      <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
-        <i data-lucide="info" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-        <span><strong>Importante:</strong> Guarde esta chave em local seguro (anote ou salve nos seus documentos). Você usará ela para ativar o sistema no seu computador ou caso precise formatar/trocar de máquina no futuro.</span>
+      <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
+        <svg width="16" height="16" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span><strong>Importante:</strong> Guarde esta chave em local seguro. Você a utilizará para ativar o sistema no seu computador ou caso precise formatar/trocar de máquina no futuro.</span>
       </div>
 
     </section>
@@ -246,39 +281,60 @@
     <!-- ============================================================= -->
     <!-- CARD 2: DOWNLOAD DO INSTALADOR WINDOWS -->
     <!-- ============================================================= -->
-    <section aria-labelledby="downloadSectionTitle" class="card-glass p-6 sm:p-8 rounded-3xl border border-slate-800/80 shadow-2xl space-y-6">
+    <section aria-labelledby="downloadSectionTitle" class="p-5 sm:p-7 rounded-2xl bg-[#08121d] border border-slate-800 shadow-2xl space-y-5">
       
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div class="space-y-1">
-          <div class="flex items-center justify-center sm:justify-start gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400">
-            <i data-lucide="monitor" class="w-4 h-4"></i>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+        <div class="space-y-0.5">
+          <div class="flex items-center justify-center sm:justify-start gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-400">
+            <svg width="14" height="14" class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
             <span>Instalação Oficial Windows</span>
           </div>
           <h2 id="downloadSectionTitle" class="text-xl sm:text-2xl font-black text-white">
             Instalador do PROSPER Desktop (.EXE)
           </h2>
-          <p class="text-xs sm:text-sm text-slate-400">
+          <p class="text-xs sm:text-[13px] text-slate-400">
             Versão Oficial 1.0.0 • Compatível com Windows 10 e Windows 11 (64 bits)
           </p>
         </div>
-        <div class="flex items-center gap-2">
+        <div>
           <span class="text-xs font-mono font-bold text-slate-300 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-800">
             ~114 MB • 64-bit
           </span>
         </div>
       </div>
 
-      <!-- BOTÃO PRINCIPAL DE DOWNLOAD -->
+      <!-- BOTÃO DE DOWNLOAD -->
       <div class="space-y-3">
-        <a href="https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link" target="_blank" class="w-full py-5 px-8 rounded-2xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 hover:from-emerald-300 hover:to-teal-300 active:scale-95 text-slate-950 font-black text-base sm:text-xl uppercase tracking-wide shadow-glow-emerald hover:scale-[1.01] transition-all flex items-center justify-center gap-3">
-          <i data-lucide="download" class="w-6 h-6 stroke-[2.5]"></i>
+        <a href="https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link" target="_blank" class="w-full py-4 sm:py-4.5 px-6 rounded-xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 hover:from-emerald-300 hover:to-teal-300 active:scale-95 text-slate-950 font-black text-base sm:text-lg uppercase tracking-wide shadow-glow-emerald hover:scale-[1.01] transition-all flex items-center justify-center gap-2.5">
+          <svg width="22" height="22" class="w-5 h-5 sm:w-5.5 sm:h-5.5 text-slate-950 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
           <span>BAIXAR INSTALADOR OFICIAL AGORA (.EXE)</span>
         </a>
 
-        <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 font-medium pt-1">
-          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Download Seguro (Google Drive)</span>
-          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instalador Autônomo com SQLite Local</span>
-          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Livre de propagandas ou rastreadores</span>
+        <div class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400 font-medium pt-0.5">
+          <span class="flex items-center gap-1.5">
+            <svg width="14" height="14" class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path clip-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" fill-rule="evenodd"></path>
+            </svg>
+            Download Seguro (Google Drive)
+          </span>
+          <span class="text-slate-600">•</span>
+          <span class="flex items-center gap-1.5">
+            <svg width="14" height="14" class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path clip-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" fill-rule="evenodd"></path>
+            </svg>
+            Instalador Autônomo com SQLite Local
+          </span>
+          <span class="text-slate-600">•</span>
+          <span class="flex items-center gap-1.5">
+            <svg width="14" height="14" class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path clip-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" fill-rule="evenodd"></path>
+            </svg>
+            Livre de propagandas e rastreadores
+          </span>
         </div>
       </div>
 
@@ -287,68 +343,78 @@
     <!-- ============================================================= -->
     <!-- CARD 3: PASSO A PASSO ILUSTRADO & GUIA SMARTSCREEN -->
     <!-- ============================================================= -->
-    <section aria-labelledby="stepSectionTitle" class="card-glass p-6 sm:p-8 rounded-3xl border border-slate-800/80 space-y-8">
+    <section aria-labelledby="stepSectionTitle" class="p-5 sm:p-7 rounded-2xl bg-[#08121d] border border-slate-800 space-y-6">
       
-      <div class="text-center sm:text-left space-y-1">
-        <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400">Instalação Rápida</span>
-        <h2 id="stepSectionTitle" class="text-xl sm:text-2xl font-black text-white flex items-center justify-center sm:justify-start gap-2">
-          <i data-lucide="zap" class="w-5 h-5 text-emerald-400"></i>
+      <div class="text-center sm:text-left space-y-0.5">
+        <span class="text-[10.5px] font-extrabold uppercase tracking-widest text-emerald-400">Instalação Rápida</span>
+        <h2 id="stepSectionTitle" class="text-lg sm:text-xl font-black text-white flex items-center justify-center sm:justify-start gap-2">
+          <svg width="20" height="20" class="w-5 h-5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
           <span>Como Ativar e Usar o Sistema em 3 Passos</span>
         </h2>
       </div>
 
       <!-- 3 Passos -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         
         <!-- Passo 1 -->
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
           <div class="flex items-center justify-between">
-            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-400 font-black flex items-center justify-center text-sm border border-emerald-500/30">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/15 text-emerald-400 font-black flex items-center justify-center text-xs border border-emerald-500/30">
               1
             </div>
-            <i data-lucide="file-down" class="w-4 h-4 text-slate-500"></i>
+            <svg width="16" height="16" class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
           </div>
           <h3 class="text-sm font-bold text-white">Execute o Instalador</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Dê um duplo clique no arquivo baixado no seu computador. O assistente instalará o PROSPER na sua máquina em poucos segundos.
+            Dê um duplo clique no arquivo baixado. O assistente instalará o PROSPER na sua máquina em poucos segundos.
           </p>
         </div>
 
         <!-- Passo 2 -->
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
           <div class="flex items-center justify-between">
-            <div class="w-9 h-9 rounded-xl bg-cyan-500/15 text-cyan-400 font-black flex items-center justify-center text-sm border border-cyan-500/30">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400 font-black flex items-center justify-center text-xs border border-cyan-500/30">
               2
             </div>
-            <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-500"></i>
+            <svg width="16" height="16" class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
           </div>
           <h3 class="text-sm font-bold text-white">Abra o PROSPER</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Abra o ícone criado na sua Área de Trabalho. Na tela inicial de boas-vindas, clique no botão <strong>"Ativar Licença"</strong>.
+            Abra o ícone na sua Área de Trabalho. Na tela inicial de boas-vindas, clique em <strong>"Ativar Licença"</strong>.
           </p>
         </div>
 
         <!-- Passo 3 -->
-        <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
           <div class="flex items-center justify-between">
-            <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-purple-400 font-black flex items-center justify-center text-sm border border-purple-500/30">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/15 text-purple-400 font-black flex items-center justify-center text-xs border border-purple-500/30">
               3
             </div>
-            <i data-lucide="shield-check" class="w-4 h-4 text-slate-500"></i>
+            <svg width="16" height="16" class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
           </div>
           <h3 class="text-sm font-bold text-white">Cole a Chave Serial</h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Informe seu e-mail de compra e cole a sua chave de ativação. O sistema será liberado permanentemente com todos os módulos ativos.
+            Informe seu e-mail de compra e cole a sua chave de ativação. O sistema será liberado permanentemente com todos os módulos.
           </p>
         </div>
 
       </div>
 
-      <!-- GUIA VISUAL DO WINDOWS SMARTSCREEN (EVITA 99% DAS DÚVIDAS DE SUPORTE) -->
-      <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-950/40 via-blue-900/20 to-navy-950 border border-blue-500/30 space-y-3 text-left">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0">
-            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+      <!-- GUIA VISUAL DO WINDOWS SMARTSCREEN -->
+      <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-blue-950/40 via-blue-900/15 to-slate-950 border border-blue-500/30 space-y-2.5 text-left">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-500/30">
+            <svg width="16" height="16" class="w-4 h-4 text-blue-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
           </div>
           <div>
             <h3 class="text-xs sm:text-sm font-bold text-white">Apareceu a tela azul "O Windows protegeu o computador"?</h3>
@@ -356,17 +422,17 @@
           </div>
         </div>
 
-        <div class="pl-0 sm:pl-12 space-y-2 text-xs text-slate-300 leading-relaxed">
+        <div class="space-y-2 text-xs text-slate-300 leading-relaxed pl-0 sm:pl-10">
           <p>
-            O <strong>Windows Defender SmartScreen</strong> exibe este aviso preventivo para praticamente qualquer programa novo baixado diretamente da web que ainda não acumulou milhões de downloads na Microsoft Store.
+            O <strong>Windows Defender SmartScreen</strong> exibe este aviso preventivo para programas novos baixados diretamente da web que ainda não acumularam milhões de downloads na Microsoft Store.
           </p>
-          <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 font-mono text-[11px] text-slate-200 space-y-1">
+          <div class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 font-mono text-[11px] text-slate-200 space-y-1">
             <div class="flex items-center gap-2">
-              <span class="w-5 h-5 rounded-full bg-blue-500 text-slate-950 flex items-center justify-center font-bold text-[10px]">1</span>
-              <span>Clique no link sublinhado: <strong class="text-white underline">"Mais informações"</strong></span>
+              <span class="w-4.5 h-4.5 rounded-full bg-blue-500 text-slate-950 flex items-center justify-center font-bold text-[10px]">1</span>
+              <span>Clique no link sublinhado: <strong class="text-white underline cursor-pointer">"Mais informações"</strong></span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px]">2</span>
+              <span class="w-4.5 h-4.5 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px]">2</span>
               <span>Clique no botão: <strong class="text-emerald-400">"Executar assim mesmo"</strong></span>
             </div>
           </div>
@@ -381,27 +447,32 @@
     <!-- ============================================================= -->
     <!-- CARD 4: SUPORTE VIP DIRETO & CANAIS DE AJUDA -->
     <!-- ============================================================= -->
-    <section aria-labelledby="supportSectionTitle" class="card-glass p-6 sm:p-8 rounded-3xl border border-slate-800/80 space-y-6">
+    <section aria-labelledby="supportSectionTitle" class="p-5 sm:p-7 rounded-2xl bg-[#08121d] border border-slate-800 space-y-5">
       
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-        <div class="space-y-1">
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Atendimento Dedicado</span>
+        <div class="space-y-0.5">
+          <span class="text-[10.5px] font-bold uppercase tracking-wider text-emerald-400">Atendimento Dedicado</span>
           <h2 id="supportSectionTitle" class="text-lg sm:text-xl font-black text-white">
             Precisa de ajuda com o download ou ativação?
           </h2>
-          <p class="text-xs text-slate-400">
+          <p class="text-xs sm:text-[13px] text-slate-400">
             Nossa equipe técnica e de suporte está pronta para te atender e garantir que seu sistema funcione perfeitamente.
           </p>
         </div>
 
         <!-- Contatos Rápidos -->
-        <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-          <a href="mailto:financas.feroli@gmail.com" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
-            <i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i>
+        <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto shrink-0">
+          <a href="mailto:financas.feroli@gmail.com" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-2">
+            <svg width="16" height="16" class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
             <span>financas.feroli@gmail.com</span>
           </a>
-          <a href="https://api.whatsapp.com/send?phone=5591987545861&text=Ol%C3%A1%2C%20acabei%20de%20adquirir%20o%20PROSPER%20e%20gostaria%20de%20ajuda%20com%20a%20instala%C3%A7%C3%A3o." target="_blank" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-600/30">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
+
+          <a href="https://api.whatsapp.com/send?phone=5591987545861&text=Ol%C3%A1%2C%20acabei%20de%20adquirir%20o%20PROSPER%20e%20gostaria%20de%20ajuda%20com%20a%20instala%C3%A7%C3%A3o." target="_blank" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25">
+            <svg width="16" height="16" class="w-4 h-4 text-white shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
             <span>WhatsApp Suporte</span>
           </a>
         </div>
@@ -410,33 +481,35 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- CARD 5: PERGUNTAS FREQUENTES PÓS-COMPRA -->
+    <!-- CARD 5: DÚVIDAS FREQUENTES PÓS-COMPRA -->
     <!-- ============================================================= -->
-    <section class="card-glass p-6 sm:p-8 rounded-3xl border border-slate-800/80 space-y-6 text-left">
+    <section class="p-5 sm:p-7 rounded-2xl bg-[#08121d] border border-slate-800 space-y-4 text-left">
       <h2 class="text-base sm:text-lg font-black text-white flex items-center gap-2">
-        <i data-lucide="help-circle" class="w-5 h-5 text-emerald-400"></i>
+        <svg width="18" height="18" class="w-[18px] h-[18px] text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
         <span>Dúvidas Frequentes sobre a Licença</span>
       </h2>
 
-      <div class="space-y-3 text-xs">
-        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <h3 class="font-bold text-white text-sm">Posso instalar em outro computador caso troque de máquina?</h3>
+      <div class="space-y-2.5 text-xs sm:text-[13px]">
+        <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+          <h3 class="font-bold text-white text-[13.5px]">Posso instalar em outro computador caso troque de máquina?</h3>
           <p class="text-slate-400 leading-relaxed">
-            Sim! Sua licença é vitalícia. Basta baixar novamente o instalador na sua nova máquina e inserir sua chave. Você também pode exportar o backup do seu banco de dados SQLite e restaurá-lo no novo PC para manter todo o seu histórico.
+            Sim! Sua licença é vitalícia. Basta baixar o instalador no novo computador e reinserir sua chave. Você também pode exportar uma cópia do seu banco de dados SQLite local no sistema atual e restaurá-la para manter todo o seu histórico financeiro intacto.
           </p>
         </div>
 
-        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <h3 class="font-bold text-white text-sm">O sistema vai me cobrar alguma mensalidade no futuro?</h3>
+        <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+          <h3 class="font-bold text-white text-[13.5px]">O sistema vai me cobrar alguma mensalidade no futuro?</h3>
           <p class="text-slate-400 leading-relaxed">
-            Não. O modelo do PROSPER é de pagamento único definitivo. Você comprou o software e tem o direito permanente de utilizá-lo sem mensalidades ou taxas recorrentes.
+            Não. O modelo do PROSPER é de licença permanente e definitiva. Você comprou o software e tem o direito permanente de utilizá-lo sem cobranças recorrentes, anuidades ou custos adicionais.
           </p>
         </div>
 
-        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <h3 class="font-bold text-white text-sm">Onde ficam salvos os meus dados financeiros?</h3>
+        <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+          <h3 class="font-bold text-white text-[13.5px]">Onde ficam salvos os meus dados financeiros?</h3>
           <p class="text-slate-400 leading-relaxed">
-            Exclusivamente no disco rígido do seu próprio computador, em formato SQLite protegido. Nenhuma informação de faturamento, saldos ou clientes é enviada para a internet.
+            Exclusivamente no disco rígido do seu próprio computador, em formato SQLite protegido por criptografia AES. Nenhuma informação de saldo, contas ou clientes é transmitida para a internet.
           </p>
         </div>
       </div>
@@ -447,9 +520,13 @@
   <!-- ================================================================= -->
   <!-- FOOTER -->
   <!-- ================================================================= -->
-  <footer class="py-8 border-t border-slate-800/60 text-center text-xs text-slate-500 no-print">
+  <footer class="border-t border-slate-800/80 bg-[#08121d] py-7 text-center text-xs text-slate-500 no-print mt-12 relative z-10">
     <div class="max-w-5xl mx-auto px-4 space-y-2">
-      <p class="text-slate-400 font-semibold">PROSPER Gestão Financeira • Sistema Empresarial Desktop Offline</p>
+      <div class="flex items-center justify-center gap-2">
+        <div class="w-5 h-5 rounded-md bg-slate-950 text-white font-black text-[10px] grid place-items-center">P</div>
+        <span class="font-bold text-slate-400">PROSPER Gestão Financeira</span>
+        <span>• Sistema Empresarial Desktop Offline</span>
+      </div>
       <p>© 2026 PROSPER Soluções Empresariais. Todos os direitos reservados.</p>
     </div>
   </footer>
@@ -458,32 +535,29 @@
   <!-- JAVASCRIPT: CONFETTI, URL PARAMS, COPIAR & DOWNLOAD TXT -->
   <!-- ================================================================= -->
   <script>
-    // Inicializa Lucide Icons
-    lucide.createIcons();
-
-    // 1. Disparar Efeito de Confete Comemorativo ao Carregar a Página
+    // 1. Confete comemorativo ao carregar
     window.addEventListener('load', () => {
       try {
         if (typeof confetti === 'function') {
           confetti({
-            particleCount: 90,
-            spread: 80,
-            origin: { y: 0.55 },
-            colors: ['#10b981', '#34d399', '#38bdf8', '#ffffff']
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.5 },
+            colors: ['#10b981', '#34d399', '#00d084', '#ffffff']
           });
         }
       } catch (e) {
         console.log('Confetti opt-out', e);
       }
 
-      // 2. Extrair Parâmetros da Kiwify da URL (?key=... / ?email=... / ?name=...)
       parseUrlParameters();
     });
 
+    // 2. Extrair parâmetros da Kiwify da URL (?key=... / ?email=... / ?name=...)
     function parseUrlParameters() {
       const params = new URLSearchParams(window.location.search);
 
-      // Chave Serial Dinâmica da Kiwify
+      // Chave Serial Dinâmica
       const serialParam = params.get('key') || params.get('licence') || params.get('license') || params.get('licenca') || params.get('serial') || params.get('code');
       if (serialParam && serialParam.trim().length > 0) {
         document.getElementById('licenseKey').innerText = serialParam.trim();
@@ -502,17 +576,15 @@
         document.getElementById('customerEmailDisplay').innerText = `E-mail registrado: ${emailParam.trim()}`;
       }
 
-      // Configurar Link do WhatsApp com a chave e o link
       updateWhatsAppShareLink();
     }
 
-    // 3. Função para Copiar a Chave com Feedback Visual
+    // 3. Copiar chave
     function copyKey() {
       const key = document.getElementById('licenseKey').innerText.trim();
       navigator.clipboard.writeText(key).then(() => {
         const copyText = document.getElementById('copyText');
         const copyBtn = document.getElementById('copyBtn');
-        const copyIcon = document.getElementById('copyIcon');
 
         copyText.innerText = 'Copiado!';
         copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
@@ -526,7 +598,7 @@
       });
     }
 
-    // 4. Função para Baixar a Chave em arquivo .TXT para Backup do Cliente
+    // 4. Baixar TXT com dados da licença
     function downloadLicenseTxt() {
       const key = document.getElementById('licenseKey').innerText.trim();
       const content = `=====================================================
@@ -563,7 +635,7 @@ E-mail: financas.feroli@gmail.com
       URL.revokeObjectURL(url);
     }
 
-    // 5. Atualizar Link do WhatsApp com a Chave e Link de Download
+    // 5. Atualizar Link do WhatsApp com a chave e link
     function updateWhatsAppShareLink() {
       const key = document.getElementById('licenseKey').innerText.trim();
       const downloadLink = "https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link";
