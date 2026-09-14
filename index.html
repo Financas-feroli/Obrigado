@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pagamento Confirmado • PROSPER Gestão Financeira</title>
-<meta name="description" content="Sua licença vitalícia do PROSPER foi liberada. Copie sua chave e baixe o instalador oficial para Windows.">
+<meta name="description" content="Sua licença vitalícia do PROSPER foi liberada. Acesse sua chave de ativação e baixe o instalador oficial para Windows.">
 <meta name="robots" content="noindex, nofollow">
 
+<!-- Facebook Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -15,7 +16,26 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
 (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','1403342131749075');
 fbq('track','PageView');
-fbq('track','Purchase',{content_name:'PROSPER Licença Vitalícia',value:197.00,currency:'BRL'});
+
+// Disparo seguro e deduplicado de Purchase apenas com ID de pedido real
+(function() {
+  try {
+    var p = new URLSearchParams(window.location.search);
+    var orderId = p.get('order_id') || p.get('order') || p.get('transaction_id') || p.get('tid');
+    if (orderId && orderId.trim()) {
+      var storageKey = 'prosper_meta_purchase_' + orderId.trim();
+      if (!sessionStorage.getItem(storageKey)) {
+        sessionStorage.setItem(storageKey, 'true');
+        fbq('track', 'Purchase', {
+          content_name: 'PROSPER Licença Vitalícia',
+          value: 197.00,
+          currency: 'BRL',
+          order_id: orderId.trim()
+        });
+      }
+    }
+  } catch(e) {}
+})();
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1403342131749075&ev=PageView&noscript=1"></noscript>
 
@@ -26,22 +46,36 @@ fbq('track','Purchase',{content_name:'PROSPER Licença Vitalícia',value:197.00,
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18439673827');
-  gtag('event', 'conversion', {
-    'send_to': 'AW-18439673827/W-ZCCIbMm_McEOOv3NhE',
-    'value': 197.00,
-    'currency': 'BRL',
-    'transaction_id': ''
-  });
-  gtag('event', 'purchase', {
-    'transaction_id': '',
-    'value': 197.00,
-    'currency': 'BRL',
-    'items': [{
-      'item_name': 'PROSPER Licença Vitalícia',
-      'price': 197.00,
-      'quantity': 1
-    }]
-  });
+
+  // Disparo seguro e deduplicado de Conversão do Google Ads apenas com ID de transação real
+  (function() {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      var orderId = p.get('order_id') || p.get('order') || p.get('transaction_id') || p.get('tid');
+      if (orderId && orderId.trim()) {
+        var storageKey = 'prosper_google_conversion_' + orderId.trim();
+        if (!sessionStorage.getItem(storageKey)) {
+          sessionStorage.setItem(storageKey, 'true');
+          gtag('event', 'conversion', {
+            'send_to': 'AW-18439673827/W-ZCCIbMm_McEOOv3NhE',
+            'value': 197.00,
+            'currency': 'BRL',
+            'transaction_id': orderId.trim()
+          });
+          gtag('event', 'purchase', {
+            'transaction_id': orderId.trim(),
+            'value': 197.00,
+            'currency': 'BRL',
+            'items': [{
+              'item_name': 'PROSPER Licença Vitalícia',
+              'price': 197.00,
+              'quantity': 1
+            }]
+          });
+        }
+      }
+    } catch(e) {}
+  })();
 </script>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -70,18 +104,18 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
 <body>
 <div class="no-print bg-[#071018] text-emerald-300 text-center text-xs sm:text-sm font-bold py-2.5 px-4">
   <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
-  PAGAMENTO APROVADO • SUA LICENÇA VITALÍCIA ESTÁ LIBERADA
+  PAGAMENTO CONFIRMADO • SUA LICENÇA VITALÍCIA ESTÁ DISPONÍVEL
 </div>
 
 <header class="no-print sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200">
   <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3">
       <div class="w-10 h-10 rounded-xl bg-[#071018] text-white grid place-items-center font-black text-lg ring-1 ring-emerald-500/30">P</div>
       <div class="leading-none">
         <div class="font-black tracking-tight text-slate-950">PROSPER</div>
         <div class="text-[9px] uppercase tracking-[.18em] font-bold text-emerald-600 mt-1">Gestão Financeira</div>
       </div>
-    </div>
+    </a>
     <div class="flex items-center gap-2">
       <span class="hidden sm:inline-flex px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">Licença Vitalícia</span>
       <button onclick="window.print()" class="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700">
@@ -94,21 +128,20 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
 <section class="relative overflow-hidden bg-white hero-glow">
   <div class="max-w-5xl mx-auto px-5 pt-14 pb-12 text-center relative">
     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-black uppercase tracking-wider">
-      ✓ Compra confirmada • acesso imediato
+      ✓ Compra confirmada • Acesso imediato
     </div>
-    <h1 class="mt-5 text-4xl sm:text-6xl font-black tracking-tight text-slate-950 leading-[1.05]">
+    <h1 id="pageTitle" class="mt-5 text-4xl sm:text-6xl font-black tracking-tight text-slate-950 leading-[1.05]">
       Sua licença está <span class="text-emerald-600">liberada.</span>
     </h1>
     <p class="mt-5 max-w-2xl mx-auto text-slate-600 text-base sm:text-lg leading-relaxed">
-      Você já pode instalar o PROSPER no seu computador. Abaixo estão as duas informações mais importantes:
-      <strong class="text-slate-900">sua chave de ativação</strong> e o <strong class="text-slate-900">instalador oficial</strong>.
+      Você já pode instalar o PROSPER no seu computador. Abaixo você confere as informações de ativação e o instalador oficial para Windows.
     </p>
   </div>
 </section>
 
 <main class="max-w-5xl mx-auto px-5 pb-16 space-y-7">
 
-  <!-- PRIORIDADE 1 -->
+  <!-- PRIORIDADE 1: BLOCO DA CHAVE DE ATIVAÇÃO -->
   <section class="print-card key-glow rounded-3xl bg-[#071018] text-white p-6 sm:p-9 border border-emerald-500/30 relative overflow-hidden">
     <div class="absolute -right-24 -top-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
     <div class="relative">
@@ -116,34 +149,58 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
         <div>
           <div class="text-emerald-400 text-xs font-black uppercase tracking-[.16em]">01 • Sua licença</div>
           <h2 class="mt-2 text-2xl sm:text-3xl font-black">Chave de ativação vitalícia</h2>
-          <p class="mt-1 text-slate-400 text-sm">Guarde esta chave. Ela será usada para ativar o PROSPER.</p>
+          <p class="mt-1 text-slate-400 text-sm">Guarde sua chave. Ela será usada para ativar o PROSPER no seu computador.</p>
         </div>
         <span class="w-fit px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-bold">Sem mensalidade</span>
       </div>
 
-      <div class="mt-7 grid lg:grid-cols-[1fr_auto] gap-3">
-        <div id="licenseKey" class="mono min-h-16 px-4 py-4 rounded-2xl bg-black/35 border border-slate-700 text-emerald-300 text-center sm:text-left text-base sm:text-xl font-black tracking-wider flex items-center justify-center sm:justify-start select-all">
-          PROSPER-P6UD-4HWB-NZQH-4XKX
+      <!-- ESTADO A: CHAVE PRESENTE NA URL -->
+      <div id="keyPresentBlock" class="hidden">
+        <div class="mt-7 grid lg:grid-cols-[1fr_auto] gap-3">
+          <div id="licenseKey" class="mono min-h-16 px-4 py-4 rounded-2xl bg-black/35 border border-slate-700 text-emerald-300 text-center sm:text-left text-base sm:text-xl font-black tracking-wider flex items-center justify-center sm:justify-start select-all">
+            <!-- Preenchido dinamicamente via JS -->
+          </div>
+          <button id="copyBtn" onclick="copyKey()" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition active:scale-95">
+            <span id="copyText">Copiar chave</span>
+          </button>
         </div>
-        <button id="copyBtn" onclick="copyKey()" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition active:scale-95">
-          <span id="copyText">Copiar chave</span>
-        </button>
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
+          <span>✓ Ativação permanente • Windows 10/11 • 64 bits</span>
+          <button onclick="downloadLicenseTxt()" class="text-emerald-300 hover:text-emerald-200 font-bold underline underline-offset-4">
+            Salvar chave em arquivo TXT
+          </button>
+        </div>
+
+        <div class="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-sm text-slate-300">
+          <strong class="text-white">Importante:</strong> guarde esta chave em local seguro. Se trocar ou formatar o computador, ela será necessária para a ativação.
+        </div>
       </div>
 
-      <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
-        <span>✓ Ativação permanente • Windows 10/11 • 64 bits</span>
-        <button onclick="downloadLicenseTxt()" class="text-emerald-300 hover:text-emerald-200 font-bold underline underline-offset-4">
-          Salvar chave em arquivo TXT
-        </button>
+      <!-- ESTADO B: CHAVE ENVIADA POR E-MAIL / KIWIFY -->
+      <div id="keyMissingBlock" class="mt-6 rounded-2xl bg-white/5 border border-white/10 p-5 sm:p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 grid place-items-center shrink-0 text-xl font-bold">
+            ✉
+          </div>
+          <div class="space-y-2">
+            <h3 class="text-base sm:text-lg font-bold text-white">Sua chave foi enviada por e-mail</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Por segurança, sua chave de ativação exclusiva é entregue diretamente no <strong class="text-emerald-400">e-mail informado na compra pela Kiwify</strong>.
+            </p>
+            <div class="pt-2 text-xs text-slate-400 space-y-1">
+              <div>1. Acesse sua caixa de entrada e procure pelo e-mail de confirmação da <b>Kiwify</b> ou <b>PROSPER</b>.</div>
+              <div>2. Caso não localize na caixa principal, confira a pasta de <b>Spam</b> ou <b>Lixo Eletrônico</b>.</div>
+              <div>3. Você também pode visualizar seus dados de acesso na sua conta em <a href="https://dashboard.kiwify.com.br" target="_blank" rel="noopener" class="text-emerald-400 underline hover:text-emerald-300">kiwify.com.br</a>.</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-sm text-slate-300">
-        <strong class="text-white">Importante:</strong> não perca sua chave. Se trocar ou formatar o computador, ela será necessária para uma nova ativação.
-      </div>
     </div>
   </section>
 
-  <!-- PRIORIDADE 2 -->
+  <!-- PRIORIDADE 2: DOWNLOAD DO INSTALADOR -->
   <section class="rounded-3xl bg-white border border-slate-200 card p-6 sm:p-9">
     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
       <div>
@@ -154,56 +211,66 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
       <span class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-xs font-bold">Windows 10 / 11 • 64 bits</span>
     </div>
 
-    <a href="https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link" target="_blank" rel="noopener" class="mt-7 w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
-      <span class="text-xl">↓</span> BAIXAR INSTALADOR OFICIAL (.EXE)
-    </a>
+    <div class="mt-7 space-y-3">
+      <a id="mainDownloadBtn" href="https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
+        <span class="text-xl">↓</span> BAIXAR INSTALADOR OFICIAL (.EXE)
+      </a>
+      <div class="text-center">
+        <a href="/download" class="text-xs font-semibold text-slate-500 hover:text-emerald-600 underline underline-offset-4">
+          Preferir página detalhada de download com guia de instalação
+        </a>
+      </div>
+    </div>
 
-    <div class="mt-4 grid sm:grid-cols-3 gap-3 text-xs">
-      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-slate-600"><b class="text-slate-900">Download seguro</b><br>Arquivo hospedado no Google Drive.</div>
+    <div class="mt-6 grid sm:grid-cols-3 gap-3 text-xs">
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-slate-600"><b class="text-slate-900">Download direto</b><br>Arquivo oficial verificado.</div>
       <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-slate-600"><b class="text-slate-900">100% desktop</b><br>Funciona diretamente no Windows.</div>
-      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-slate-600"><b class="text-slate-900">Dados locais</b><br>Banco SQLite armazenado no computador.</div>
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-slate-600"><b class="text-slate-900">Dados locais</b><br>Banco SQLite protegido no seu PC.</div>
     </div>
   </section>
 
-  <!-- ORIENTAÇÃO -->
+  <!-- PRIORIDADE 3: PASSO A PASSO DE ATIVAÇÃO -->
   <section class="dark-grid rounded-3xl text-white p-6 sm:p-9">
     <div class="max-w-3xl">
       <div class="text-emerald-400 text-xs font-black uppercase tracking-[.16em]">03 • Ativação</div>
-      <h2 class="mt-2 text-2xl sm:text-3xl font-black">Instale e ative em 3 passos</h2>
+      <h2 class="mt-2 text-2xl sm:text-3xl font-black">Instale e ative em 3 passos simples</h2>
     </div>
     <div class="mt-7 grid md:grid-cols-3 gap-4">
       <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
         <div class="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 grid place-items-center font-black">1</div>
-        <h3 class="mt-4 font-black">Instale</h3>
-        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Baixe o .EXE, abra o arquivo e siga o instalador até concluir.</p>
+        <h3 class="mt-4 font-black">Instale o software</h3>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Baixe o arquivo .EXE, execute e conclua o assistente de instalação do Windows.</p>
       </div>
       <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
         <div class="w-9 h-9 rounded-xl bg-cyan-400 text-slate-950 grid place-items-center font-black">2</div>
         <h3 class="mt-4 font-black">Abra o PROSPER</h3>
-        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Na tela inicial, escolha a opção <strong class="text-white">Ativar Licença</strong>.</p>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Abra o ícone criado na sua Área de Trabalho e clique no botão <strong class="text-white">Ativar Licença</strong>.</p>
       </div>
       <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
         <div class="w-9 h-9 rounded-xl bg-white text-slate-950 grid place-items-center font-black">3</div>
-        <h3 class="mt-4 font-black">Ative</h3>
-        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Informe o e-mail usado na compra e cole sua chave de ativação.</p>
+        <h3 class="mt-4 font-black">Cole sua chave</h3>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Informe o e-mail da sua compra e cole sua chave de ativação recebida.</p>
       </div>
     </div>
 
-    <div class="mt-5 rounded-2xl border border-amber-400/20 bg-amber-400/5 p-5">
-      <h3 class="font-black text-amber-300">Windows exibiu “O Windows protegeu o computador”?</h3>
+    <div class="mt-6 rounded-2xl border border-amber-400/20 bg-amber-400/5 p-5">
+      <h3 class="font-black text-amber-300 flex items-center gap-2">
+        <span>⚠</span> O Windows exibiu “O Windows protegeu o computador”?
+      </h3>
       <p class="mt-2 text-sm text-slate-300 leading-relaxed">
-        Esse aviso pode aparecer para aplicativos novos distribuídos pela internet. Se você reconhece que baixou o instalador oficial por este link, clique em <strong class="text-white">“Mais informações”</strong> e depois em <strong class="text-white">“Executar assim mesmo”</strong>.
+        Esse é o aviso padrão do Windows SmartScreen para softwares recém-lançados distribuídos fora da Microsoft Store. Para prosseguir normalmente:
+        clique no link <strong class="text-white">“Mais informações”</strong> e em seguida no botão <strong class="text-white">“Executar assim mesmo”</strong>. O PROSPER é 100% seguro e livre de ameaças.
       </p>
     </div>
   </section>
 
-  <!-- MOBILE -->
+  <!-- MOBILE / ENVIAR PARA O WHATSAPP -->
   <section class="rounded-3xl bg-emerald-50 border border-emerald-200 p-6 sm:p-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
       <div>
-        <div class="text-emerald-700 text-xs font-black uppercase tracking-[.16em]">Comprou pelo celular?</div>
-        <h2 class="mt-2 text-xl sm:text-2xl font-black text-slate-950">Envie seus dados para o WhatsApp</h2>
-        <p class="mt-2 text-sm text-slate-600 max-w-2xl">Envie sua chave e o link do instalador para abrir esta informação no computador.</p>
+        <div class="text-emerald-700 text-xs font-black uppercase tracking-[.16em]">Acessou pelo celular?</div>
+        <h2 class="mt-2 text-xl sm:text-2xl font-black text-slate-950">Envie o link para o seu WhatsApp</h2>
+        <p class="mt-2 text-sm text-slate-600 max-w-2xl">Facilite o download enviando esta página de acesso diretamente para o seu WhatsApp para abrir no computador.</p>
       </div>
       <a id="shareWhatsappBtn" href="#" target="_blank" class="shrink-0 inline-flex items-center justify-center px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-lg shadow-emerald-600/20">
         Enviar para meu WhatsApp
@@ -215,50 +282,65 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
   <section class="rounded-3xl bg-white border border-slate-200 card p-6 sm:p-8">
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
       <div>
-        <div class="text-emerald-600 text-xs font-black uppercase tracking-[.16em]">Suporte</div>
-        <h2 class="mt-2 text-xl sm:text-2xl font-black text-slate-950">Precisou de ajuda?</h2>
-        <p class="mt-2 text-sm text-slate-500">Fale conosco se precisar de auxílio com instalação ou ativação.</p>
+        <div class="text-emerald-600 text-xs font-black uppercase tracking-[.16em]">Atendimento</div>
+        <h2 class="mt-2 text-xl sm:text-2xl font-black text-slate-950">Precisa de ajuda com a ativação?</h2>
+        <p class="mt-2 text-sm text-slate-500">Nossa equipe de suporte está à disposição para auxiliar na instalação e ativação do seu sistema.</p>
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href="mailto:financas.feroli@gmail.com" class="px-4 py-3 rounded-xl border border-slate-200 font-bold text-sm text-slate-700 hover:bg-slate-50">✉ financas.feroli@gmail.com</a>
-        <a href="https://api.whatsapp.com/send?phone=5591987545861&text=Ol%C3%A1%2C%20acabei%20de%20adquirir%20o%20PROSPER%20e%20gostaria%20de%20ajuda%20com%20a%20instala%C3%A7%C3%A3o." target="_blank" class="px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-500">WhatsApp Suporte</a>
+        <a href="https://api.whatsapp.com/send?phone=5591987545861&text=Ol%C3%A1%2C%20acabei%20de%20adquirir%20o%20PROSPER%20e%20gostaria%20de%20ajuda%20com%20a%20instala%C3%A7%C3%A3o." target="_blank" rel="noopener" class="px-4 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm hover:bg-emerald-500">WhatsApp Suporte</a>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="rounded-3xl bg-white border border-slate-200 p-6 sm:p-8">
-    <h2 class="text-xl font-black text-slate-950">Dúvidas rápidas</h2>
+    <h2 class="text-xl font-black text-slate-950">Dúvidas frequentes</h2>
     <div class="mt-5 grid md:grid-cols-3 gap-3">
       <details class="group rounded-2xl bg-slate-50 border border-slate-200 p-4">
         <summary class="cursor-pointer font-bold text-sm text-slate-900">Posso trocar de computador?</summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Sim. Baixe o instalador novamente e utilize sua chave de ativação.</p>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Sim. Baixe o instalador no novo computador e utilize a mesma chave de ativação recebida.</p>
       </details>
       <details class="group rounded-2xl bg-slate-50 border border-slate-200 p-4">
-        <summary class="cursor-pointer font-bold text-sm text-slate-900">Existe mensalidade?</summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Não. A compra corresponde a uma licença permanente, sem cobrança mensal.</p>
+        <summary class="cursor-pointer font-bold text-sm text-slate-900">Existe alguma mensalidade?</summary>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Não. A compra corresponde a uma licença permanente do PROSPER, sem cobranças mensais.</p>
       </details>
       <details class="group rounded-2xl bg-slate-50 border border-slate-200 p-4">
         <summary class="cursor-pointer font-bold text-sm text-slate-900">Onde ficam meus dados?</summary>
-        <p class="mt-3 text-sm text-slate-500 leading-relaxed">O sistema utiliza armazenamento local em SQLite, conforme a configuração do aplicativo.</p>
+        <p class="mt-3 text-sm text-slate-500 leading-relaxed">Seus dados são 100% locais, salvos em banco SQLite no próprio disco do seu computador.</p>
       </details>
     </div>
   </section>
 
 </main>
 
-<footer class="bg-[#071018] text-slate-500 py-8 text-center text-xs">
-  <div class="font-bold text-slate-300">PROSPER Gestão Financeira</div>
-  <div class="mt-1">Sistema Empresarial Desktop Offline • © 2026 PROSPER Soluções Empresariais</div>
+<footer class="bg-[#071018] text-slate-400 py-10 text-xs">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 grid place-items-center font-black text-sm">P</div>
+      <div class="font-bold text-white text-sm">PROSPER Gestão Financeira</div>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+      <a href="/" class="hover:text-emerald-400 transition">Início</a>
+      <a href="/download" class="hover:text-emerald-400 transition">Download Oficial</a>
+      <a href="/privacidade" class="hover:text-emerald-400 transition">Política de Privacidade</a>
+      <a href="/termos" class="hover:text-emerald-400 transition">Termos de Uso</a>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-5 text-center text-slate-500 space-y-1">
+    <p>© 2026 PROSPER Soluções Empresariais • Rafael F. Oliveira • CNPJ: 00.000.000/0001-00</p>
+    <p>Software Desktop Local para Windows 10 e Windows 11 • Comercializado via Kiwify</p>
+  </div>
 </footer>
 
 <script>
 const DOWNLOAD_URL = "https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link";
+let currentKey = "";
 
 window.addEventListener('load', () => {
   try {
     if (typeof confetti === 'function') {
-      confetti({particleCount:90,spread:75,origin:{y:.45},colors:['#10b981','#34d399','#ffffff']});
+      confetti({particleCount:80,spread:70,origin:{y:.4},colors:['#10b981','#34d399','#ffffff']});
     }
   } catch(e) {}
   parseUrlParameters();
@@ -266,42 +348,71 @@ window.addEventListener('load', () => {
 });
 
 function parseUrlParameters() {
-  const p = new URLSearchParams(location.search);
+  const p = new URLSearchParams(window.location.search);
   const serial = p.get('key') || p.get('licence') || p.get('license') || p.get('licenca') || p.get('serial') || p.get('code');
-  if (serial && serial.trim()) document.getElementById('licenseKey').innerText = serial.trim();
+  
+  const keyPresentBlock = document.getElementById('keyPresentBlock');
+  const keyMissingBlock = document.getElementById('keyMissingBlock');
+  const licenseKeyEl = document.getElementById('licenseKey');
+
+  if (serial && serial.trim() && serial.trim().length > 5) {
+    currentKey = serial.trim().toUpperCase();
+    licenseKeyEl.innerText = currentKey;
+    keyPresentBlock.classList.remove('hidden');
+    keyMissingBlock.classList.add('hidden');
+  } else {
+    currentKey = "";
+    keyPresentBlock.classList.add('hidden');
+    keyMissingBlock.classList.remove('hidden');
+  }
 
   const name = p.get('name') || p.get('nome') || p.get('customer_name');
   if (name && name.trim()) {
     const first = name.trim().split(' ')[0];
-    document.querySelector('h1').innerHTML = `Parabéns, ${first}! Sua licença está <span class="text-emerald-600">liberada.</span>`;
+    document.getElementById('pageTitle').innerHTML = `Parabéns, ${first}! Sua licença está <span class="text-emerald-600">liberada.</span>`;
   }
 }
 
 async function copyKey() {
-  const key = document.getElementById('licenseKey').innerText.trim();
+  if (!currentKey) return;
   try {
-    await navigator.clipboard.writeText(key);
+    await navigator.clipboard.writeText(currentKey);
   } catch(e) {
-    const ta=document.createElement('textarea'); ta.value=key; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    const ta = document.createElement('textarea');
+    ta.value = currentKey;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
   }
-  const t=document.getElementById('copyText');
-  t.innerText='Chave copiada!';
-  setTimeout(()=>t.innerText='Copiar chave',2200);
+  const t = document.getElementById('copyText');
+  t.innerText = 'Chave copiada!';
+  setTimeout(() => t.innerText = 'Copiar chave', 2200);
 }
 
 function downloadLicenseTxt() {
-  const key=document.getElementById('licenseKey').innerText.trim();
-  const content=`PROSPER GESTÃO FINANCEIRA\n\nCHAVE DE ATIVAÇÃO VITALÍCIA:\n${key}\n\nINSTALADOR OFICIAL:\n${DOWNLOAD_URL}\n\nCOMO ATIVAR:\n1. Instale o PROSPER.\n2. Abra o aplicativo.\n3. Clique em "Ativar Licença".\n4. Informe seu e-mail e cole a chave.\n\nSUPORTE:\nWhatsApp: (91) 98754-5861\nE-mail: financas.feroli@gmail.com`;
-  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`PROSPER-Licenca-${key.substring(0,15)}.txt`;
-  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  if (!currentKey) return;
+  const content = `PROSPER GESTÃO FINANCEIRA\n\nCHAVE DE ATIVAÇÃO VITALÍCIA:\n${currentKey}\n\nINSTALADOR OFICIAL:\n${DOWNLOAD_URL}\n\nCOMO ATIVAR:\n1. Instale o PROSPER no Windows.\n2. Abra o aplicativo.\n3. Clique em "Ativar Licença".\n4. Informe seu e-mail e cole sua chave.\n\nSUPORTE:\nWhatsApp: (91) 98754-5861\nE-mail: financas.feroli@gmail.com\nSite: https://prospergestao.com.br`;
+  const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `PROSPER-Licenca-${currentKey.substring(0,15)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 function updateWhatsAppShareLink() {
-  const key=document.getElementById('licenseKey').innerText.trim();
-  const message=`*PROSPER Gestão Financeira - Dados de Acesso*\n\n🔑 *Chave Vitalícia:* ${key}\n\n💻 *Instalador para Windows:*\n${DOWNLOAD_URL}\n\nGuarde esta mensagem para instalar e ativar o sistema.`;
-  document.getElementById('shareWhatsappBtn').href='https://api.whatsapp.com/send?text='+encodeURIComponent(message);
+  let message = `*PROSPER Gestão Financeira - Dados de Acesso*\n\n`;
+  if (currentKey) {
+    message += `🔑 *Chave Vitalícia:* ${currentKey}\n\n`;
+  } else {
+    message += `🔑 *Chave de Ativação:* Enviada para o seu e-mail cadastrado na Kiwify.\n\n`;
+  }
+  message += `💻 *Download do Instalador Windows:*\nhttps://prospergestao.com.br/download\n\nAbra esta mensagem no computador para instalar o software.`;
+  document.getElementById('shareWhatsappBtn').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(message);
 }
 </script>
 </body>
