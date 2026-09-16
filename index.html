@@ -208,13 +208,13 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
       <div>
         <div class="text-emerald-600 text-xs font-black uppercase tracking-[.16em]">02 • Instalação</div>
         <h2 class="mt-2 text-2xl sm:text-3xl font-black text-slate-950">Baixe o PROSPER para Windows</h2>
-        <p class="mt-2 text-slate-500 text-sm">Instalador oficial • versão 1.0.0 • aproximadamente 114 MB</p>
+        <p class="mt-2 text-slate-500 text-sm">Instalador oficial • versão 2.4.0 • aproximadamente 110 MB</p>
       </div>
       <span class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 text-xs font-bold">Windows 10 / 11 • 64 bits</span>
     </div>
 
     <div class="mt-7 space-y-3">
-      <a id="mainDownloadBtn" href="https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
+      <a id="mainDownloadBtn" href="https://drive.usercontent.google.com/download?id=1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC&export=download&confirm=t" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
         <span class="text-xl">↓</span> BAIXAR INSTALADOR OFICIAL (.EXE)
       </a>
       <div class="text-center">
@@ -368,11 +368,17 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
   </div>
 </footer>
 
+<script src="../download-config.js"></script>
 <script>
-const DOWNLOAD_URL = "https://drive.google.com/file/d/1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC/view?usp=drive_link";
+const DOWNLOAD_URL = (window.PROSPER_DOWNLOAD && window.PROSPER_DOWNLOAD.url)
+  ? window.PROSPER_DOWNLOAD.url
+  : "https://drive.usercontent.google.com/download?id=1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC&export=download&confirm=t";
 let currentKey = "";
 
 window.addEventListener('load', () => {
+  const mainBtn = document.getElementById('mainDownloadBtn');
+  if (mainBtn) mainBtn.href = DOWNLOAD_URL;
+
   try {
     if (typeof confetti === 'function') {
       confetti({particleCount:80,spread:70,origin:{y:.4},colors:['#10b981','#34d399','#ffffff']});
