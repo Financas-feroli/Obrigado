@@ -214,7 +214,7 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
     </div>
 
     <div class="mt-7 space-y-3">
-      <a id="mainDownloadBtn" href="https://drive.usercontent.google.com/download?id=1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC&export=download&confirm=t" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
+      <a id="mainDownloadBtn" href="https://github.com/Financas-feroli/prosper-desktop/releases/download/v2.4.0/PROSPER.Gestao.Financeira.Setup.2.4.0.exe" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg py-5 px-5 shadow-xl shadow-emerald-500/20 transition hover:-translate-y-0.5 active:scale-[.99]">
         <span class="text-xl">↓</span> BAIXAR INSTALADOR OFICIAL (.EXE)
       </a>
       <div class="text-center">
@@ -372,7 +372,7 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
 <script>
 const DOWNLOAD_URL = (window.PROSPER_DOWNLOAD && window.PROSPER_DOWNLOAD.url)
   ? window.PROSPER_DOWNLOAD.url
-  : "https://drive.usercontent.google.com/download?id=1qRQZGGp8hLabMjIi2ccP8HxukYNsKQMC&export=download&confirm=t";
+  : "https://github.com/Financas-feroli/prosper-desktop/releases/download/v2.4.0/PROSPER.Gestao.Financeira.Setup.2.4.0.exe";
 let currentKey = "";
 
 window.addEventListener('load', () => {
@@ -391,17 +391,56 @@ window.addEventListener('load', () => {
 function parseUrlParameters() {
   const p = new URLSearchParams(window.location.search);
   const serial = p.get('key') || p.get('licence') || p.get('license') || p.get('licenca') || p.get('serial') || p.get('code');
+  const orderId = p.get('order_id') || p.get('orderId') || p.get('order');
+  const email = p.get('email');
   
   const keyPresentBlock = document.getElementById('keyPresentBlock');
   const keyMissingBlock = document.getElementById('keyMissingBlock');
   const licenseKeyEl = document.getElementById('licenseKey');
 
+  // 1. Chave passada diretamente na URL
   if (serial && serial.trim() && serial.trim().length > 5) {
     currentKey = serial.trim().toUpperCase();
     licenseKeyEl.innerText = currentKey;
     keyPresentBlock.classList.remove('hidden');
     keyMissingBlock.classList.add('hidden');
-  } else {
+    updateWhatsAppShareLink();
+  } 
+  // 2. Pedido ou e-mail passado no redirecionamento da Kiwify
+  else if (orderId || email) {
+    keyPresentBlock.classList.remove('hidden');
+    keyMissingBlock.classList.add('hidden');
+    licenseKeyEl.innerHTML = '<span class="animate-pulse text-emerald-400 text-sm font-semibold">Liberando sua chave de licença vitalícia...</span>';
+    
+    const queryParam = orderId ? `order_id=${encodeURIComponent(orderId)}` : `email=${encodeURIComponent(email)}`;
+    fetch(`/api/get-license?${queryParam}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.key) {
+          currentKey = data.key;
+          licenseKeyEl.innerText = currentKey;
+          keyPresentBlock.classList.remove('hidden');
+          keyMissingBlock.classList.add('hidden');
+          updateWhatsAppShareLink();
+          try {
+            if (typeof confetti === 'function') {
+              confetti({particleCount:80,spread:70,origin:{y:.4},colors:['#10b981','#34d399','#ffffff']});
+            }
+          } catch(e) {}
+        } else {
+          currentKey = "";
+          keyPresentBlock.classList.add('hidden');
+          keyMissingBlock.classList.remove('hidden');
+        }
+      })
+      .catch(() => {
+        currentKey = "";
+        keyPresentBlock.classList.add('hidden');
+        keyMissingBlock.classList.remove('hidden');
+      });
+  } 
+  // 3. Acesso direto sem identificador
+  else {
     currentKey = "";
     keyPresentBlock.classList.add('hidden');
     keyMissingBlock.classList.remove('hidden');
