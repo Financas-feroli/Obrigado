@@ -30,7 +30,7 @@ fbq('track','PageView');
         sessionStorage.setItem(storageKey, 'true');
         fbq('track', 'Purchase', {
           content_name: 'PROSPER Licença Vitalícia',
-          value: 197.00,
+          value: 97.00,
           currency: 'BRL',
           order_id: orderId.trim()
         });
@@ -60,17 +60,17 @@ fbq('track','PageView');
           sessionStorage.setItem(storageKey, 'true');
           gtag('event', 'conversion', {
             'send_to': 'AW-18439673827/W-ZCCIbMm_McEOOv3NhE',
-            'value': 197.00,
+            'value': 97.00,
             'currency': 'BRL',
             'transaction_id': orderId.trim()
           });
           gtag('event', 'purchase', {
             'transaction_id': orderId.trim(),
-            'value': 197.00,
+            'value': 97.00,
             'currency': 'BRL',
             'items': [{
               'item_name': 'PROSPER Licença Vitalícia',
-              'price': 197.00,
+              'price': 97.00,
               'quantity': 1
             }]
           });
