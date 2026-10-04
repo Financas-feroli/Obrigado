@@ -100,6 +100,7 @@ body { margin:0; font-family:Inter,system-ui,sans-serif; color:var(--ink); backg
   body { background:#fff!important; }
   .print-card { box-shadow:none!important; border:2px solid #111!important; }
 }
+html.px-smooth { scroll-behavior: auto !important; }
 </style>
 </head>
 
@@ -495,6 +496,58 @@ function updateWhatsAppShareLink() {
   message += `💻 *Download do Instalador Windows:*\nhttps://prospergestao.com.br/download\n\nAbra esta mensagem no computador para instalar o software.`;
   document.getElementById('shareWhatsappBtn').href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(message);
 }
+</script>
+<script>
+/* ===== Rolagem suave com o mouse (desktop) =====
+   Aplica inércia à roda do mouse. Não atua em telas de toque nem com "reduzir movimento" ativo. */
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(pointer: coarse)').matches)return;
+  var root=document.documentElement,EASE=0.11;
+  root.classList.add('px-smooth');
+  var target=window.scrollY,cur=target,raf=null,last=0;
+  function max(){return Math.max(0,root.scrollHeight-innerHeight)}
+  function clamp(v){return Math.max(0,Math.min(max(),v))}
+  function step(now){
+    var dt=Math.min(64,now-(last||now));last=now;
+    var d=target-cur;
+    if(Math.abs(d)<0.5){cur=target;window.scrollTo(0,cur);raf=null;last=0;return}
+    cur+=d*(1-Math.pow(1-EASE,dt/16.667));
+    window.scrollTo(0,cur);
+    raf=requestAnimationFrame(step);
+  }
+  function go(){if(!raf){last=0;raf=requestAnimationFrame(step)}}
+  function inScrollable(el){
+    while(el&&el!==document.body&&el!==root){
+      var o=getComputedStyle(el).overflowY;
+      if((o==='auto'||o==='scroll')&&el.scrollHeight>el.clientHeight+1)return true;
+      el=el.parentElement;
+    }
+    return false;
+  }
+  addEventListener('wheel',function(e){
+    if(e.ctrlKey||e.defaultPrevented||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+    var m=document.getElementById('exit-modal');if(m&&m.classList.contains('is-open'))return;
+    if(inScrollable(e.target))return;
+    if(max()<=0)return;
+    e.preventDefault();
+    var dy=e.deltaMode===1?e.deltaY*34:e.deltaMode===2?e.deltaY*innerHeight:e.deltaY;
+    if(!raf){cur=target=window.scrollY}
+    target=clamp(target+dy);go();
+  },{passive:false});
+  /* barra de rolagem, teclado e outros métodos: sincroniza quando a animação não está ativa */
+  addEventListener('scroll',function(){if(!raf){cur=target=window.scrollY}},{passive:true});
+  addEventListener('resize',function(){target=clamp(target);cur=clamp(cur)});
+  /* links internos (#secao) passam pelo mesmo motor suave */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented)return;
+    var id=a.getAttribute('href').slice(1);if(!id)return;
+    var el=document.getElementById(id);if(!el)return;
+    e.preventDefault();
+    if(!raf){cur=target=window.scrollY}
+    target=clamp(el.getBoundingClientRect().top+window.scrollY-72);go();
+    try{history.replaceState(null,'','#'+id)}catch(x){}
+  });
+})();
 </script>
 </body>
 </html>
